@@ -9,15 +9,53 @@
 let cupcakesCollection = null;
 
 // use get to grab and display the cupcakes in their default order (this endpoint should return all of the cupcakes in  JSON in alphabetical order])
-//TODO
+var settings = {
+  "url": "https://6f186305-ab26-4839-b806-380e3560e049.mock.pstmn.io/cupcakes.json",
+  "method": "GET",
+  "timeout": 0,
+};
 
+$.ajax(settings).done(function (response) {
+  console.log(response);
+  displayCupcakes(response);
+
+  //save in global variable
+  cupcakesCollection = response;
+})
+.fail(function(err){
+  console.error(err.message);
+});
+
+// $.get("https://6f186305-ab26-4839-b806-380e3560e049.mock.pstmn.io/cupcakes.json", function(){
+//   console.log(response);
+//   displayCupcakes(response);
+
+//   //save in global variable
+//   cupcakesCollection = response;
+// }, "json");
 
 // display sorted in ascending order (this is calling a different endpoint than the original, but you can use the same one or the global variable, we're just writing this as another call to the server so we can see the syntax for this type of call)
-//TODO
+$("#alpha").on("click", function(){
+  if(cupcakesCollection[0].name == "Bubble Gum Pop"){
+    return;
+  }else {
+    let backwardsCollection = cupcakesCollection;
+    backwardsCollection = backwardsCollection.reverse();
+    displayCupcakes(backwardsCollection);
+  }
+});
 
 
 // display the cupcakes sorted in descending order, but we'll use some built-in methods to handle this on the cupcakes we already have rather than making another call to the endpoint 
-//TODO
+$("#zed").on("click", function(){
+  if(cupcakesCollection[0].name == "Bubble Gum Pop"){
+    let backwardsCollection = cupcakesCollection;
+    backwardsCollection = backwardsCollection.reverse();
+    displayCupcakes(backwardsCollection);
+  }else {
+    return;
+  }
+});
 
 // helper function to display the cupcakes given the data returned from the call
 function displayCupcakes(data){
